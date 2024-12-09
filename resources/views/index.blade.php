@@ -79,7 +79,7 @@
                         <div class="form mt-4">
                             <!-- Example Form -->
                             <div class="form-step d-block">
-                                <form class="p-4 border rounded">
+                                <form class="p-4 border rounded" id="solcitudesForm">
                                     <p class="text-justify">
                                         <strong>La solicitud de beca</strong> tiene carácter de declaración jurada y su presentación da inicio a un
                                         procedimiento de evaluación del estado de necesidad económica de la familia solicitante a fin
@@ -123,7 +123,7 @@
 
                             <div class="form-step d-none">
                                 <!-- Paso 2: Message -->
-                                <form id="estudianteForm " class="p-4 border rounded">
+                                <form id="estudianteForm" class="p-4 border rounded">
                                     <!-- Sección de Identificación -->
                                     <h4 class="mt-4">Información del Estudiante</h4>
                                     <div class="row g-3 mb-3">
@@ -138,7 +138,10 @@
                                         </div>
                                         <div class="col-lg-6 col-12">
                                             <label for="nroDocumento" class="form-label"><strong>Número de Documento</strong></label>
-                                            <input type="text" id="nroDocumento" class="form-control" placeholder="Ingrese el número de documento" required>
+                                            <div class="input-group">
+                                                <input type="text" id="nroDocumento" class="form-control" placeholder="Ingrese el número de documento" required>
+                                                <button type="button" id="buscarEstudiante" class="btn btn-primary">Buscar</button>
+                                            </div>
                                             <div class="invalid-feedback">
                                                 El número de documento no es válido para el tipo seleccionado.
                                             </div>
@@ -149,16 +152,17 @@
                                     <!-- Datos del Estudiante -->
                                     <h5 class="mt-4">Datos del Estudiante</h5>
                                     <div class="mb-3">
+                                        <input type="hidden" id="id_estudiante" name="id_estudiante">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" id="nombres" class="form-control" placeholder="Nombres del estudiante" required>
+                                        <input type="text" id="nombres" class="form-control" placeholder="Nombres del estudiante" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="apellidos" class="form-label">Apellidos</label>
-                                        <input type="text" id="apellidos" class="form-control" placeholder="Apellidos del estudiante" required>
+                                        <input type="text" id="apellidos" class="form-control" placeholder="Apellidos del estudiante" readonly>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="codigoBCP" class="form-label">Código BCP</label>
-                                        <input type="text" id="codigoBCP" class="form-control" placeholder="Código BCP del estudiante" maxlength="15" required>
+                                        <label for="codigo_sianet" class="form-label">Código Estudiante Sianet</label>
+                                        <input type="text" id="codigo_sianet" class="form-control" placeholder="Código Sianet del estudiante" readonly>
                                     </div>
                                     <hr>
 
@@ -533,29 +537,29 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6 col-12">
-                                            <label for="numeroDocumento" class="form-label"><strong>Número de Documento</strong></label>
-                                            <input type="text" id="numeroDocumento" class="form-control" placeholder="Ingrese el número de documento" required>
+                                            <label for="prog2numeroDocumento" class="form-label"><strong>Número de Documento</strong></label>
+                                            <input type="text" id="prog2numeroDocumento" class="form-control" placeholder="Ingrese el número de documento" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" id="nombres" class="form-control" placeholder="Nombres del progenitor" readonly>
+                                        <input type="text" id="prog2nombres" class="form-control" placeholder="Nombres del progenitor" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="apellidos" class="form-label">Apellidos</label>
-                                        <input type="text" id="apellidos" class="form-control" placeholder="Apellidos del progenitor" readonly>
+                                        <input type="text" id="prog2apellidos" class="form-control" placeholder="Apellidos del progenitor" readonly>
                                     </div>
                                     <hr>
 
                                     <!-- Número de hijos -->
                                     <div class="row g-3 mb-3">
                                         <div class="col-lg-6 col-12">
-                                            <label for="numeroHijos" class="form-label"><strong>Número de Hijos</strong></label>
-                                            <input type="number" id="numeroHijos" class="form-control" placeholder="Ingrese el número de hijos" min="0" required>
+                                            <label for="prog2numeroHijos" class="form-label"><strong>Número de Hijos</strong></label>
+                                            <input type="number" id="prog2numeroHijos" class="form-control" placeholder="Ingrese el número de hijos" min="0" required>
                                         </div>
                                         <div class="col-lg-6 col-12">
-                                            <label for="hijosMatriculados" class="form-label"><strong>Número de hijos matriculados en la institución</strong></label>
-                                            <input type="number" id="hijosMatriculados" class="form-control" placeholder="Ingrese el número de hijos matriculados" min="0" required>
+                                            <label for="prog2hijosMatriculados" class="form-label"><strong>Número de hijos matriculados en la institución</strong></label>
+                                            <input type="number" id="prog2hijosMatriculados" class="form-control" placeholder="Ingrese el número de hijos matriculados" min="0" required>
                                         </div>
                                     </div>
                                     <hr>
@@ -563,7 +567,7 @@
                                     <!-- Formación académica -->
                                     <h5 class="mt-4">Formación Académica</h5>
                                     <div class="mb-3">
-                                        <select id="formacionAcademica" class="form-select" required>
+                                        <select id="prog2formacionAcademica" class="form-select" required>
                                             <option value="" selected disabled>Seleccione su nivel de formación</option>
                                             <option value="tecnica">Formación Superior Técnica</option>
                                             <option value="universitaria">Formación Superior Universitaria</option>
@@ -581,11 +585,11 @@
                                     <div class="mb-3">
                                         <label class="form-label"><strong>Actualmente, ¿se encuentra desempeñando un trabajo remunerado?</strong></label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="trabajoRemunerado" id="trabajoSi" value="si" required>
+                                            <input class="form-check-input" type="radio" name="prog2trabajoRemunerado" id="trabajoSi" value="si" required>
                                             <label class="form-check-label" for="trabajoSi">Sí</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="trabajoRemunerado" id="trabajoNo" value="no">
+                                            <input class="form-check-input" type="radio" name="prog2trabajoRemunerado" id="trabajoNo" value="no">
                                             <label class="form-check-label" for="trabajoNo">No</label>
                                         </div>
                                     </div>
@@ -593,8 +597,8 @@
                                     <!-- Campos para "No tiene trabajo remunerado" -->
                                     <div id="desempleoCampos" class="d-none">
                                         <div class="mb-3">
-                                            <label for="tiempoDesempleo" class="form-label"><strong>Tiempo de desempleo (en meses)</strong></label>
-                                            <input type="number" id="tiempoDesempleo" class="form-control" placeholder="Ingrese el tiempo en meses" min="0">
+                                            <label for="prog2tiempoDesempleo" class="form-label"><strong>Tiempo de desempleo (en meses)</strong></label>
+                                            <input type="number" id="prog2tiempoDesempleo" class="form-control" placeholder="Ingrese el tiempo en meses" min="0">
                                         </div>
                                     </div>
 
@@ -603,66 +607,66 @@
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Se encuentra en planilla?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="planilla" id="planillaSi" value="si">
-                                                <label class="form-check-label" for="planillaSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2planilla" id="prog2planillaSi" value="si">
+                                                <label class="form-check-label" for="prog2planillaSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="planilla" id="planillaNo" value="no">
-                                                <label class="form-check-label" for="planillaNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2planilla" id="prog2planillaNo" value="no">
+                                                <label class="form-check-label" for="prog2planillaNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Emite recibo por honorarios?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="honorarios" id="honorariosSi" value="si">
-                                                <label class="form-check-label" for="honorariosSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2honorarios" id="prog2honorariosSi" value="si">
+                                                <label class="form-check-label" for="prog2honorariosSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="honorarios" id="honorariosNo" value="no">
-                                                <label class="form-check-label" for="honorariosNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2honorarios" id="prog2honorariosNo" value="no">
+                                                <label class="form-check-label" for="prog2honorariosNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label"><strong>Tipo de sueldo</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tipoSueldo" id="sueldoFijo" value="fijo">
-                                                <label class="form-check-label" for="sueldoFijo">Fijo</label>
+                                                <input class="form-check-input" type="radio" name="prog2tipoSueldo" id="prog2sueldoFijo" value="fijo">
+                                                <label class="form-check-label" for="prog2sueldoFijo">Fijo</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tipoSueldo" id="sueldoVariable" value="variable">
-                                                <label class="form-check-label" for="sueldoVariable">Variable</label>
+                                                <input class="form-check-input" type="radio" name="prog2tipoSueldo" id="prog2sueldoVariable" value="variable">
+                                                <label class="form-check-label" for="prog2sueldoVariable">Variable</label>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="cargo" class="form-label"><strong>Cargo que desempeña</strong></label>
-                                            <input type="text" id="cargo" class="form-control" placeholder="Ingrese su cargo">
+                                            <label for="prog2cargo" class="form-label"><strong>Cargo que desempeña</strong></label>
+                                            <input type="text" id="prog2cargo" class="form-control" placeholder="Ingrese su cargo">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="anioLaboral" class="form-label"><strong>Desde qué año labora ahí</strong></label>
-                                            <input type="number" id="anioLaboral" class="form-control" placeholder="Ingrese el año" min="1900" max="2099">
+                                            <label for="prog2anioLaboral" class="form-label"><strong>Desde qué año labora ahí</strong></label>
+                                            <input type="number" id="prog2anioLaboral" class="form-control" placeholder="Ingrese el año" min="1900" max="2099">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="lugarTrabajo" class="form-label"><strong>Lugar de trabajo</strong></label>
-                                            <input type="text" id="lugarTrabajo" class="form-control" placeholder="Ingrese el lugar de trabajo">
+                                            <label for="prog2lugarTrabajo" class="form-label"><strong>Lugar de trabajo</strong></label>
+                                            <input type="text" id="prog2lugarTrabajo" class="form-control" placeholder="Ingrese el lugar de trabajo">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="ingresos" class="form-label"><strong>Remuneración o ingresos brutos mensuales (S/)</strong></label>
-                                            <input type="number" id="ingresos" class="form-control" placeholder="Ingrese el monto en soles" min="0">
+                                            <label for="prog2ingresos" class="form-label"><strong>Remuneración o ingresos brutos mensuales (S/)</strong></label>
+                                            <input type="number" id="prog2ingresos" class="form-control" placeholder="Ingrese el monto en soles" min="0">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Durante el año percibe bonos?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="bonos" id="bonosSi" value="si">
-                                                <label class="form-check-label" for="bonosSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2bonos" id="prog2bonosSi" value="si">
+                                                <label class="form-check-label" for="prog2bonosSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="bonos" id="bonosNo" value="no">
-                                                <label class="form-check-label" for="bonosNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2bonos" id="prog2bonosNo" value="no">
+                                                <label class="form-check-label" for="prog2bonosNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3 d-none" id="bonosMonto">
-                                            <label for="montoBonos" class="form-label"><strong>Monto aproximado de bonos (S/)</strong></label>
-                                            <select id="montoBonos" class="form-select">
+                                            <label for="prog2montoBonos" class="form-label"><strong>Monto aproximado de bonos (S/)</strong></label>
+                                            <select id="prog2montoBonos" class="form-select">
                                                 <option value="" selected disabled>Seleccione un rango</option>
                                                 <option value="5000-10000">De S/5,000 a S/10,000</option>
                                                 <option value="10000-15000">De S/10,000 a S/15,000</option>
@@ -672,17 +676,17 @@
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Durante el año percibe utilidades?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="utilidades" id="utilidadesSi" value="si">
-                                                <label class="form-check-label" for="utilidadesSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2utilidades" id="prog2utilidadesSi" value="si">
+                                                <label class="form-check-label" for="prog2utilidadesSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="utilidades" id="utilidadesNo" value="no">
-                                                <label class="form-check-label" for="utilidadesNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2utilidades" id="prog2utilidadesNo" value="no">
+                                                <label class="form-check-label" for="prog2utilidadesNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3 d-none" id="utilidadesMonto">
-                                            <label for="montoUtilidades" class="form-label"><strong>Monto aproximado de utilidades (S/)</strong></label>
-                                            <select id="montoUtilidades" class="form-select">
+                                            <label for="prog2montoUtilidades" class="form-label"><strong>Monto aproximado de utilidades (S/)</strong></label>
+                                            <select id="prog2montoUtilidades" class="form-select">
                                                 <option value="" selected disabled>Seleccione un rango</option>
                                                 <option value="5000-10000">De S/5,000 a S/10,000</option>
                                                 <option value="10000-15000">De S/10,000 a S/15,000</option>
@@ -697,40 +701,40 @@
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Se encuentra en planilla?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="planilla" id="planillaSi" value="si">
-                                                <label class="form-check-label" for="planillaSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2planilla" id="prog2planillaSi" value="si">
+                                                <label class="form-check-label" for="prog2planillaSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="planilla" id="planillaNo" value="no">
-                                                <label class="form-check-label" for="planillaNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2planilla" id="prog2planillaNo" value="no">
+                                                <label class="form-check-label" for="prog2planillaNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label"><strong>¿Emite recibo por honorarios?</strong></label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="honorarios" id="honorariosSi" value="si">
-                                                <label class="form-check-label" for="honorariosSi">Sí</label>
+                                                <input class="form-check-input" type="radio" name="prog2honorarios" id="prog2honorariosSi" value="si">
+                                                <label class="form-check-label" for="prog2honorariosSi">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="honorarios" id="honorariosNo" value="no">
-                                                <label class="form-check-label" for="honorariosNo">No</label>
+                                                <input class="form-check-input" type="radio" name="prog2honorarios" id="prog2honorariosNo" value="no">
+                                                <label class="form-check-label" for="prog2honorariosNo">No</label>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="cargo" class="form-label"><strong>Cargo que desempeña</strong></label>
-                                            <input type="text" id="cargo" class="form-control" placeholder="Ingrese su cargo">
+                                            <label for="prog2cargo" class="form-label"><strong>Cargo que desempeña</strong></label>
+                                            <input type="text" id="prog2cargo" class="form-control" placeholder="Ingrese su cargo">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="anioLaboral" class="form-label"><strong>Desde qué año labora ahí</strong></label>
-                                            <input type="number" id="anioLaboral" class="form-control" placeholder="Ingrese el año" min="1900" max="2099">
+                                            <label for="prog2anioLaboral" class="form-label"><strong>Desde qué año labora ahí</strong></label>
+                                            <input type="number" id="prog2anioLaboral" class="form-control" placeholder="Ingrese el año" min="1900" max="2099">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="lugarTrabajo" class="form-label"><strong>Lugar de trabajo</strong></label>
-                                            <input type="text" id="lugarTrabajo" class="form-control" placeholder="Ingrese el lugar de trabajo">
+                                            <label for="prog2lugarTrabajo" class="form-label"><strong>Lugar de trabajo</strong></label>
+                                            <input type="text" id="prog2lugarTrabajo" class="form-control" placeholder="Ingrese el lugar de trabajo">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="ingresos" class="form-label"><strong>Remuneración o ingresos brutos mensuales (S/)</strong></label>
-                                            <input type="number" id="ingresos" class="form-control" placeholder="Ingrese el monto en soles" min="0">
+                                            <label for="prog2ingresos" class="form-label"><strong>Remuneración o ingresos brutos mensuales (S/)</strong></label>
+                                            <input type="number" id="prog2ingresos" class="form-control" placeholder="Ingrese el monto en soles" min="0">
                                         </div>
                                     </div>
 
@@ -740,26 +744,26 @@
                                     <div class="mb-3">
                                         <label class="form-label"><strong>¿Es titular o accionista de alguna empresa?</strong></label>
                                         <div class="form-check">
-                                            <input type="radio" id="titularSi" name="titularEmpresa" class="form-check-input" value="Si" required>
-                                            <label class="form-check-label" for="titularSi">Sí</label>
+                                            <input type="radio" id="prog2titularSi" name="prog2titularEmpresa" class="form-check-input" value="Si" required>
+                                            <label class="form-check-label" for="prog2titularSi">Sí</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="radio" id="titularNo" name="titularEmpresa" class="form-check-input" value="No">
-                                            <label class="form-check-label" for="titularNo">No</label>
+                                            <input type="radio" id="prog2titularNo" name="prog2titularEmpresa" class="form-check-input" value="No">
+                                            <label class="form-check-label" for="prog2titularNo">No</label>
                                         </div>
                                     </div>
                                     <div id="titularCampos" class="d-none">
                                         <div class="mb-3">
-                                            <label for="acciones" class="form-label">Indique el % de acciones o participación:</label>
-                                            <input type="number" id="acciones" class="form-control" placeholder="Ingrese el porcentaje">
+                                            <label for="prog2acciones" class="form-label">Indique el % de acciones o participación:</label>
+                                            <input type="number" id="prog2acciones" class="form-control" placeholder="Ingrese el porcentaje">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="razonSocial" class="form-label">Precisar Razón Social:</label>
-                                            <input type="text" id="razonSocial" class="form-control" placeholder="Razón Social">
+                                            <label for="prog2razonSocial" class="form-label">Precisar Razón Social:</label>
+                                            <input type="text" id="prog2razonSocial" class="form-control" placeholder="Razón Social">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="nroRuc" class="form-label">Precisar Nro de RUC:</label>
-                                            <input type="text" id="nroRuc" class="form-control" placeholder="Número de RUC">
+                                            <label for="prog2nroRuc" class="form-label">Precisar Nro de RUC:</label>
+                                            <input type="text" id="prog2nroRuc" class="form-control" placeholder="Número de RUC">
                                         </div>
                                     </div>
 
@@ -767,33 +771,33 @@
                                     <div class="mb-3">
                                         <label class="form-label"><strong>Información sobre su vivienda</strong></label>
                                         <div class="form-check">
-                                            <input type="radio" id="viviendaPropia" name="tipoVivienda" class="form-check-input" value="Propia" required>
-                                            <label class="form-check-label" for="viviendaPropia">Propia</label>
+                                            <input type="radio" id="prog2viviendaPropia" name="prog2tipoVivienda" class="form-check-input" value="Propia" required>
+                                            <label class="form-check-label" for="prog2viviendaPropia">Propia</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="radio" id="viviendaAlquilada" name="tipoVivienda" class="form-check-input" value="Alquilada">
-                                            <label class="form-check-label" for="viviendaAlquilada">Alquilada</label>
+                                            <input type="radio" id="prog2viviendaAlquilada" name="prog2tipoVivienda" class="form-check-input" value="Alquilada">
+                                            <label class="form-check-label" for="prog2viviendaAlquilada">Alquilada</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">¿Cuenta con crédito hipotecario vigente?</label>
                                         <div class="form-check">
-                                            <input type="radio" id="creditoSi" name="creditoHipotecario" class="form-check-input" value="Si">
-                                            <label class="form-check-label" for="creditoSi">Sí</label>
+                                            <input type="radio" id="prog2creditoSi" name="prog2creditoHipotecario" class="form-check-input" value="Si">
+                                            <label class="form-check-label" for="prog2creditoSi">Sí</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="radio" id="creditoNo" name="creditoHipotecario" class="form-check-input" value="No">
-                                            <label class="form-check-label" for="creditoNo">No</label>
+                                            <input type="radio" id="prog2creditoNo" name="prog2creditoHipotecario" class="form-check-input" value="No">
+                                            <label class="form-check-label" for="prog2creditoNo">No</label>
                                         </div>
                                     </div>
                                     <div id="viviendaDetalles">
                                         <div class="mb-3">
-                                            <label for="direccion" class="form-label">Especifique dirección:</label>
-                                            <input type="text" id="direccion" class="form-control" placeholder="Ingrese la dirección">
+                                            <label for="prog2direccion" class="form-label">Especifique dirección:</label>
+                                            <input type="text" id="prog2direccion" class="form-control" placeholder="Ingrese la dirección">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="metros" class="form-label">Indicar m<sup>2</sup> aproximados:</label>
-                                            <input type="number" id="metros" class="form-control" placeholder="Metros cuadrados">
+                                            <label for="prog2metros" class="form-label">Indicar m<sup>2</sup> aproximados:</label>
+                                            <input type="number" id="prog2metros" class="form-control" placeholder="Metros cuadrados">
                                         </div>
                                     </div>
 
@@ -801,17 +805,17 @@
                                     <div class="mb-3">
                                         <label class="form-label"><strong>¿Es propietario o copropietario de más de un inmueble?</strong></label>
                                         <div class="form-check">
-                                            <input type="radio" id="inmuebleSi" name="masInmuebles" class="form-check-input" value="Si">
-                                            <label class="form-check-label" for="inmuebleSi">Sí</label>
+                                            <input type="radio" id="prog2inmuebleSi" name="prog2masInmuebles" class="form-check-input" value="Si">
+                                            <label class="form-check-label" for="prog2inmuebleSi">Sí</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="radio" id="inmuebleNo" name="masInmuebles" class="form-check-input" value="No">
-                                            <label class="form-check-label" for="inmuebleNo">No</label>
+                                            <input type="radio" id="prog2inmuebleNo" name="prog2masInmuebles" class="form-check-input" value="No">
+                                            <label class="form-check-label" for="prog2inmuebleNo">No</label>
                                         </div>
                                     </div>
                                     <div id="inmueblesDetalles" class="d-none">
-                                        <label for="numInmuebles" class="form-label">N° de inmuebles:</label>
-                                        <input type="number" id="numInmuebles" class="form-control" placeholder="Ingrese el número de inmuebles">
+                                        <label for="prog2numInmuebles" class="form-label">N° de inmuebles:</label>
+                                        <input type="number" id="prog2numInmuebles" class="form-control" placeholder="Ingrese el número de inmuebles">
                                     </div>
                                 </form>
                             </div>
@@ -1114,271 +1118,241 @@
             </div>
         </div>
 
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                 // Selecciona todos los inputs de tipo texto
-                const textInputs = document.querySelectorAll('input[type="text"]');
-
-                textInputs.forEach(input => {
-                    input.addEventListener("input", function () {
-                        // Convierte el valor del input a mayúsculas
-                        this.value = this.value.toUpperCase();
-                    });
+            $(document).ready(function() {
+                 // Convertir inputs de texto a mayúsculas
+                $('input[type="text"]').on('input', function () {
+                    $(this).val($(this).val().toUpperCase());
                 });
-                const stepperItems = document.querySelectorAll(".stepper-item");
-                const formSteps = document.querySelectorAll(".form-step");
-                const prevBtn = document.getElementById("prev-btn");
-                const nextBtn = document.getElementById("next-btn");
+
+                const $stepperItems = $('.stepper-item');
+                const $formSteps = $('.form-step');
+                const $prevBtn = $('#prev-btn');
+                const $nextBtn = $('#next-btn');
                 let currentStep = 0;
 
                 function updateStepper() {
-                    stepperItems.forEach((item, index) => {
-                        const counter = item.querySelector(".step-counter");
-                        const label = item.querySelector(".step-label");
+                    $stepperItems.each(function (index) {
+                        const $item = $(this);
+                        const $counter = $item.find('.step-counter');
+                        const $label = $item.find('.step-label');
 
                         if (index === currentStep) {
-                            item.classList.add("active");
-                            counter.classList.add("bg-primary", "text-white");
-                            counter.classList.remove("bg-secondary", "text-dark");
-                            label.classList.add("text-primary");
+                            $item.addClass('active');
+                            $counter.addClass('bg-primary text-white').removeClass('bg-secondary text-dark');
+                            $label.addClass('text-primary');
                         } else {
-                            item.classList.remove("active");
-                            counter.classList.remove("bg-primary", "text-white");
-                            counter.classList.add("bg-secondary", "text-dark");
-                            label.classList.remove("text-primary");
+                            $item.removeClass('active');
+                            $counter.removeClass('bg-primary text-white').addClass('bg-secondary text-dark');
+                            $label.removeClass('text-primary');
                         }
                     });
 
-                    formSteps.forEach((step, index) => {
-                        if (index === currentStep) {
-                            step.classList.add("d-block");
-                            step.classList.remove("d-none");
-                        } else {
-                            step.classList.add("d-none");
-                            step.classList.remove("d-block");
-                        }
+                    $formSteps.each(function (index) {
+                        $(this).toggleClass('d-block', index === currentStep).toggleClass('d-none', index !== currentStep);
                     });
 
-                    prevBtn.disabled = currentStep === 0;
-                    nextBtn.textContent = currentStep === stepperItems.length - 1 ? "Solicitar Beca" : "Siguiente";
+                    $prevBtn.prop('disabled', currentStep === 0);
+                    $nextBtn.text(currentStep === $stepperItems.length - 1 ? 'Solicitar Beca' : 'Siguiente');
                 }
 
-                prevBtn.addEventListener("click", () => {
+                $prevBtn.on('click', function () {
                     if (currentStep > 0) {
                         currentStep--;
                         updateStepper();
                     }
                 });
 
-                nextBtn.addEventListener("click", () => {
-                    const currentForm = formSteps[currentStep].querySelector("form"); // Seleccionar el formulario actual
+                $nextBtn.on('click', function () {
+                    const $currentForm = $formSteps.eq(currentStep).find('form');
 
-                    if (currentForm) {
-                        if (!currentForm.checkValidity()) {
-                            currentForm.reportValidity(); // Muestra los mensajes de validación del navegador
-                            return; // Detiene el avance al siguiente paso
-                        }
-
-                        // Validación manual para el grupo de radio "reglamento" solo si existe
-                        const reglamentoRadio = currentForm.querySelector('input[name="reglamento"]:checked');
-                        const reglamentoGroupExists = currentForm.querySelector('input[name="reglamento"]');
-
-                        if (reglamentoGroupExists && !reglamentoRadio) {
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
-                                icon: 'error',
-                                confirmButtonText: 'Entendido',
-                            });
-                            return; // Detiene el avance si no está seleccionado
-                        }
-
-                        // Validación manual para los checkboxes en el formulario actual
-                        const checkboxes = currentForm.querySelectorAll('input[type="checkbox"]'); // Seleccionar checkboxes solo en el formulario actual
-                        if (checkboxes.length > 0) { // Solo validar si hay checkboxes
-                            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                            if (!isChecked) {
-                                Swal.fire({
-                                    title: 'Error',
-                                    text: 'Debe seleccionar al menos un motivo.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Entendido',
-                                });
-                                return; // Detiene la acción si no se seleccionó ninguna
-                            }
-                        }
+                    if ($currentForm.length && !$currentForm[0].checkValidity()) {
+                        $currentForm[0].reportValidity();
+                        return;
                     }
 
-                    if (currentStep < stepperItems.length - 1) {
+                    const $reglamentoGroup = $currentForm.find('input[name="reglamento"]');
+                    if ($reglamentoGroup.length && !$reglamentoGroup.is(':checked')) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
+                            icon: 'error',
+                            confirmButtonText: 'Entendido'
+                        });
+                        return;
+                    }
+
+                    const $checkboxes = $currentForm.find('input[type="checkbox"]');
+                    if ($checkboxes.length && !$checkboxes.is(':checked')) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Debe seleccionar al menos un motivo.',
+                            icon: 'error',
+                            confirmButtonText: 'Entendido'
+                        });
+                        return;
+                    }
+
+                    if (currentStep < $stepperItems.length - 1) {
                         currentStep++;
                         updateStepper();
                     } else {
-                        // Lógica para enviar el formulario y mostrar alerta moderna
                         Swal.fire({
                             title: 'Éxito',
                             text: 'Se realizó el registro de solicitud de beca correctamente.',
                             icon: 'success',
-                            confirmButtonText: 'Aceptar',
-                            confirmButtonColor: '#3085d6',
-                            background: '#fff',
-                            timer: 4000 // Si deseas que desaparezca después de 4 segundos
+                            confirmButtonText: 'Aceptar'
                         }).then(() => {
-                            // Regresar al primer paso (Step 1)
                             currentStep = 0;
                             updateStepper();
                         });
                     }
                 });
 
-
                 updateStepper();
 
+                function toggleVisibility(triggerSelector, targetSelector, condition) {
+                    $(triggerSelector).on('change', function () {
+                        $(targetSelector).toggleClass('d-none', !condition($(this)));
+                    });
+                }
 
+                toggleVisibility('#trabajoSi', '#trabajoRemuneradoCampos', () => true);
+                toggleVisibility('#trabajoNo', '#trabajoRemuneradoCampos', () => false);
+                toggleVisibility('#trabajoNo', '#desempleoCampos', () => true);
+                toggleVisibility('#trabajoSi', '#desempleoCampos', () => false);
 
-                const trabajoSi = document.getElementById("trabajoSi");
-                const trabajoNo = document.getElementById("trabajoNo");
-                const trabajoRemuneradoCampos = document.getElementById("trabajoRemuneradoCampos");
-                const desempleoCampos = document.getElementById("desempleoCampos");
+                toggleVisibility('#bonosSi', '#bonosMonto', () => true);
+                toggleVisibility('#bonosNo', '#bonosMonto', () => false);
 
-                const bonosSi = document.getElementById("bonosSi");
-                const bonosNo = document.getElementById("bonosNo");
-                const bonosMonto = document.getElementById("bonosMonto");
+                toggleVisibility('#utilidadesSi', '#utilidadesMonto', () => true);
+                toggleVisibility('#utilidadesNo', '#utilidadesMonto', () => false);
 
-                const utilidadesSi = document.getElementById("utilidadesSi");
-                const utilidadesNo = document.getElementById("utilidadesNo");
-                const utilidadesMonto = document.getElementById("utilidadesMonto");
+                toggleVisibility('#titularSi', '#titularCampos', () => true);
+                toggleVisibility('#titularNo', '#titularCampos', () => false);
 
-                // Mostrar/ocultar secciones dependiendo de trabajo remunerado
-                trabajoSi.addEventListener("change", function () {
-                    trabajoRemuneradoCampos.classList.remove("d-none");
-                    desempleoCampos.classList.add("d-none");
-                });
+                toggleVisibility('#inmuebleSi', '#inmueblesDetalles', () => true);
+                toggleVisibility('#inmuebleNo', '#inmueblesDetalles', () => false);
 
-                trabajoNo.addEventListener("change", function () {
-                    trabajoRemuneradoCampos.classList.add("d-none");
-                    desempleoCampos.classList.remove("d-none");
-                });
+                $('#tipoDocumento').on('change', function () {
+                    const $nroDocumento = $('#nroDocumento');
+                    const tipo = $(this).val();
 
-                // Mostrar/ocultar monto de bonos
-                bonosSi.addEventListener("change", function () {
-                    if (bonosSi.checked) {
-                        bonosMonto.classList.remove("d-none");
-                    }
-                });
+                    $nroDocumento.val('').removeAttr('maxlength minlength pattern placeholder');
 
-                bonosNo.addEventListener("change", function () {
-                    if (bonosNo.checked) {
-                        bonosMonto.classList.add("d-none");
-                    }
-                });
-
-                utilidadesSi.addEventListener("change", function () {
-                    if (utilidadesSi.checked) {
-                        utilidadesMonto.classList.remove("d-none"); // Mostrar el campo
-                    }
-                });
-
-                utilidadesNo.addEventListener("change", function () {
-                    if (utilidadesNo.checked) {
-                        utilidadesMonto.classList.add("d-none"); // Ocultar el campo
-                    }
-                });
-
-
-                const titularSi = document.getElementById("titularSi");
-                const titularNo = document.getElementById("titularNo");
-                const titularCampos = document.getElementById("titularCampos");
-
-                titularSi.addEventListener("change", function () {
-                    if (titularSi.checked) titularCampos.classList.remove("d-none");
-                });
-
-                titularNo.addEventListener("change", function () {
-                    if (titularNo.checked) titularCampos.classList.add("d-none");
-                });
-
-                // Más de un inmueble
-                const inmuebleSi = document.getElementById("inmuebleSi");
-                const inmuebleNo = document.getElementById("inmuebleNo");
-                const inmueblesDetalles = document.getElementById("inmueblesDetalles");
-
-                inmuebleSi.addEventListener("change", function () {
-                    if (inmuebleSi.checked) inmueblesDetalles.classList.remove("d-none");
-                });
-
-                inmuebleNo.addEventListener("change", function () {
-                    if (inmuebleNo.checked) inmueblesDetalles.classList.add("d-none");
-                });
-
-
-
-
-
-                const tipoDocumento = document.getElementById("tipoDocumento");
-                const nroDocumento = document.getElementById("nroDocumento");
-
-                tipoDocumento.addEventListener("change", function () {
-                    // Restablece el estado y elimina restricciones previas
-                    nroDocumento.setCustomValidity("");
-                    nroDocumento.value = ""; // Limpia el campo
-                    nroDocumento.removeAttribute("maxlength");
-                    nroDocumento.removeAttribute("minlength");
-                    nroDocumento.removeAttribute("pattern");
-
-                    // Aplica las restricciones en base al tipo de documento seleccionado
-                    switch (tipoDocumento.value) {
-                        case "DNI":
-                            nroDocumento.setAttribute("maxlength", "8");
-                            nroDocumento.setAttribute("minlength", "8");
-                            nroDocumento.setAttribute("pattern", "\\d{8}"); // Solo 8 dígitos
-                            nroDocumento.placeholder = "Debe tener 8 dígitos";
-                            break;
-                        case "Pasaporte":
-                            nroDocumento.setAttribute("maxlength", "12");
-                            nroDocumento.setAttribute("pattern", "[a-zA-Z0-9]{1,12}"); // Alfanumérico
-                            nroDocumento.placeholder = "Máximo 12 caracteres alfanuméricos";
-                            break;
-                        case "Carnet de Extranjería":
-                            nroDocumento.setAttribute("maxlength", "9");
-                            nroDocumento.setAttribute("minlength", "9");
-                            nroDocumento.setAttribute("pattern", "\\d{9}"); // Solo 9 dígitos
-                            nroDocumento.placeholder = "Debe tener 9 dígitos";
-                            break;
-                    }
-                });
-
-                nroDocumento.addEventListener("input", function () {
-                    const tipo = tipoDocumento.value;
-
-                    // Validación dinámica
                     switch (tipo) {
-                        case "DNI":
-                        case "Carnet de Extranjería":
-                            // Permitir solo números
-                            nroDocumento.value = nroDocumento.value.replace(/[^0-9]/g, "");
+                        case 'DNI':
+                            $nroDocumento.attr({
+                                maxlength: 8,
+                                minlength: 8,
+                                pattern: '\\d{8}',
+                                placeholder: 'Debe tener 8 dígitos'
+                            });
                             break;
-                        case "Pasaporte":
-                            // Permitir solo caracteres alfanuméricos
-                            nroDocumento.value = nroDocumento.value.replace(/[^a-zA-Z0-9]/g, "");
+                        case 'Pasaporte':
+                            $nroDocumento.attr({
+                                maxlength: 12,
+                                pattern: '[a-zA-Z0-9]{1,12}',
+                                placeholder: 'Máximo 12 caracteres alfanuméricos'
+                            });
                             break;
-                    }
-
-                    const minLength = nroDocumento.getAttribute("minlength");
-                    const maxLength = nroDocumento.getAttribute("maxlength");
-                    const valueLength = nroDocumento.value.length;
-
-                    // Validación dinámica del campo
-                    if ((minLength && valueLength < minLength) || (maxLength && valueLength > maxLength)) {
-                        nroDocumento.setCustomValidity("La cantidad de caracteres no es válida para el tipo de documento seleccionado.");
-                    } else {
-                        nroDocumento.setCustomValidity("");
+                        case 'Carnet de Extranjería':
+                            $nroDocumento.attr({
+                                maxlength: 9,
+                                minlength: 9,
+                                pattern: '\\d{9}',
+                                placeholder: 'Debe tener 9 dígitos'
+                            });
+                            break;
                     }
                 });
 
+                $('#nroDocumento').on('input', function () {
+                    const tipo = $('#tipoDocumento').val();
+                    const value = $(this).val();
+
+                    switch (tipo) {
+                        case 'DNI':
+                        case 'Carnet de Extranjería':
+                            $(this).val(value.replace(/[^0-9]/g, ''));
+                            break;
+                        case 'Pasaporte':
+                            $(this).val(value.replace(/[^a-zA-Z0-9]/g, ''));
+                            break;
+                    }
+                });
+
+                $('#buscarEstudiante').on('click', function() {
+                    const tipoDocumento = $('#tipoDocumento').val();
+                    const numeroDocumento = $('#nroDocumento').val();
+
+                    if (!tipoDocumento) {
+                        //alert('Por favor, ingrese un número de documento.');
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Por favor, seleccione un tipo de documento.',
+                            icon: 'danger',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#3085d6',
+                            background: '#fff',
+                            timer: 4000 // Si deseas que desaparezca después de 4 segundos
+                        });
+                        return;
+                    }
+
+                    if (!numeroDocumento) {
+                        //alert('Por favor, ingrese un número de documento.');
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Por favor, ingrese un número de documento.',
+                            icon: 'danger',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#3085d6',
+                            background: '#fff',
+                            timer: 4000 // Si deseas que desaparezca después de 4 segundos
+                        });
+                        return;
+                    }
+
+                    // Realizar la solicitud AJAX
+                    $.ajax({
+                        url: "{{ route('estudiantes.buscar') }}",
+                        type: "GET",
+                        data: { tipoDocumento: tipoDocumento ,nroDocumento: numeroDocumento },
+                        success: function(response) {
+                            if (response.success) {
+                                $('#id_estudiante').val(response.data.id);
+                                $('#nombres').val(response.data.nombres);
+                                $('#apellidos').val(response.data.apellidos);
+                                $('#codigo_sianet').val(response.data.codigo_sianet);
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: response.message,
+                                    icon: 'danger',
+                                    confirmButtonText: 'Aceptar',
+                                    confirmButtonColor: '#3085d6',
+                                    background: '#fff',
+                                    timer: 4000 // Si deseas que desaparezca después de 4 segundos
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                    title: 'Error',
+                                    text: 'Error al buscar el estudiante. Verifique el número de documento.',
+                                    icon: 'danger',
+                                    confirmButtonText: 'Aceptar',
+                                    confirmButtonColor: '#3085d6',
+                                    background: '#fff',
+                                    timer: 4000 // Si deseas que desaparezca después de 4 segundos
+                                });
+                        }
+                    });
+                });
             });
         </script>
-
         <!-- end container -->
     </section>
     <!-- end section -->

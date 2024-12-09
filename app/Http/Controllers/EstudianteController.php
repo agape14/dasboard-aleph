@@ -43,4 +43,26 @@ class EstudianteController extends Controller
             'estudiantes' => $estudiantes // Pasar la colección a la vista
         ]);
     }
+
+    public function buscar(Request $request)
+    {
+        $tipoDocumento = $request->query('tipoDocumento');
+        $numeroDocumento = $request->query('nroDocumento');
+        // Busca el estudiante por el número de documento
+        $estudiante = Estudiante::where('tipo_documento', $tipoDocumento)->where('nro_documento', $numeroDocumento)->first();
+
+        if ($estudiante) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $estudiante->id,
+                    'nombres' => $estudiante->nombres,
+                    'apellidos' => $estudiante->apepaterno.' '.$estudiante->apematerno,
+                    'codigo_sianet' => $estudiante->codigo_sianet,
+                ]
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Estudiante no encontrado.'], 404);
+    }
 }
