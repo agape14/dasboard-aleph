@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,11 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
-        return view('admin.home',["msg"=>"Hello! I am admin"]);
+        $estudiantes=Estudiante::all();
+        return view('admin.home', [
+            'msg' => "Hello! I am admin",
+            'estudiantes' => $estudiantes // Pasar la colección a la vista
+        ]);
     }
     public function userHome()
     {

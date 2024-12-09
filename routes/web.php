@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EstudianteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
+})->name("login");
+Route::get('/', function () {
+    return view('index');
 });
 
 Auth::routes();
@@ -29,6 +32,9 @@ Route::middleware(['auth','user-role:user'])->group(function()
 Route::middleware(['auth','user-role:admin'])->group(function()
 {
     Route::get("/admin/home",[App\Http\Controllers\HomeController::class, 'adminHome'])->name("admin.home");
+    Route::post('/importar-excel', [EstudianteController::class, 'importarExcel']);
+    Route::get("/estudiantes",[EstudianteController::class, 'index'])->name("estudiantes.index");
+    Route::put('/estudiantes/update', [EstudianteController::class, 'update'])->name('estudiantes.update');
 
 });
 

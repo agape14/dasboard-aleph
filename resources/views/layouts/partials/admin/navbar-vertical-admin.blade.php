@@ -8,12 +8,20 @@
          <!-- Navbar nav -->
          <ul class="navbar-nav flex-column" id="sideNavbar">
              <li class="nav-item">
-                 <a class="nav-link has-arrow "
-                     >
-                     <i data-feather="home" class="nav-icon icon-xs me-2"></i>Admin Dashboard
+                 <a class="nav-link has-arrow " href="{{ route('admin.home') }}">
+                     <i data-feather="home" class="nav-icon icon-xs me-2"></i>Panel Control
                  </a>
 
              </li>
+             <li class="nav-item">
+                <a class="nav-link has-arrow " href="{{ route('estudiantes.index') }}">
+                    <i data-feather="user" class="nav-icon icon-xs me-2"></i>Estudiantes
+                </a>
+
+            </li>
+
+             {{--
+
              <!-- Nav item -->
              <li class="nav-item">
                  <div class="navbar-heading">Front Section</div>
@@ -267,6 +275,7 @@
                      </i> Changelog
                  </a>
              </li>
+             --}}
          </ul>
      </div>
  </nav>
