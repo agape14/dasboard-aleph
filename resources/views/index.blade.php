@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="form mt-4">
-                            <!-- Example Form -->
+                            <!-- Paso 1: Inicio -->
                             <div class="form-step d-block">
                                 <form class="p-4 border rounded" id="solcitudesForm">
                                     <p class="text-justify">
@@ -122,7 +122,7 @@
                             </div>
 
                             <div class="form-step d-none">
-                                <!-- Paso 2: Message -->
+                                <!-- Paso 2: Estudiante -->
                                 <form id="estudianteForm" class="p-4 border rounded">
                                     <!-- Sección de Identificación -->
                                     <h4 class="mt-4">Información del Estudiante</h4>
@@ -223,7 +223,7 @@
 
                             </div>
                             <div class="form-step d-none">
-                                <!-- Paso 3:  -->
+                                <!-- Paso 3: Progenitor 1-->
                                 <form id="progenitor1Form" class="p-4 border rounded">
                                     <!-- Información del progenitor -->
                                     <h4 class="mt-4">Información del Progenitor 1</h4>
@@ -522,7 +522,7 @@
 
                             </div>
                             <div class="form-step d-none">
-                                <!-- Paso 4:  -->
+                                <!-- Paso 4: Progenitor 2 -->
                                 <form id="progenitor2Form" class="p-4 border rounded">
                                     <!-- Información del progenitor -->
                                     <h4 class="mt-4">Información del Progenitor 2</h4>
@@ -820,7 +820,7 @@
                                 </form>
                             </div>
                             <div class="form-step  d-none">
-                                <!-- Paso 5-->
+                                <!-- Paso 5: Situación Económica-->
                                 <form id="ingresosGastosForm" class="p-4 border rounded">
                                     <h3>Ingresos y Gastos Mensuales</h3>
 
@@ -978,6 +978,7 @@
                                 </form>
                             </div>
                             <div class="form-step">
+                                <!-- Paso 6: General-->
                                 <form id="documentosForm" class="p-4 border rounded">
                                     <h3>General</h3>
 
@@ -1118,170 +1119,183 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                 // Convertir inputs de texto a mayúsculas
-                $('input[type="text"]').on('input', function () {
-                    $(this).val($(this).val().toUpperCase());
-                });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    // Convertir inputs de texto a mayúsculas
+    $('input[type="text"]').on('input', function () {
+        $(this).val($(this).val().toUpperCase());
+    });
 
-                const $stepperItems = $('.stepper-item');
-                const $formSteps = $('.form-step');
-                const $prevBtn = $('#prev-btn');
-                const $nextBtn = $('#next-btn');
-                let currentStep = 0;
+    const $stepperItems = $('.stepper-item');
+    const $formSteps = $('.form-step');
+    const $prevBtn = $('#prev-btn');
+    const $nextBtn = $('#next-btn');
+    let currentStep = 0;
 
-                function updateStepper() {
-                    $stepperItems.each(function (index) {
-                        const $item = $(this);
-                        const $counter = $item.find('.step-counter');
-                        const $label = $item.find('.step-label');
+    function updateStepper() {
+        $stepperItems.each(function (index) {
+            const $item = $(this);
+            const $counter = $item.find('.step-counter');
+            const $label = $item.find('.step-label');
 
-                        if (index === currentStep) {
-                            $item.addClass('active');
-                            $counter.addClass('bg-primary text-white').removeClass('bg-secondary text-dark');
-                            $label.addClass('text-primary');
-                        } else {
-                            $item.removeClass('active');
-                            $counter.removeClass('bg-primary text-white').addClass('bg-secondary text-dark');
-                            $label.removeClass('text-primary');
-                        }
-                    });
+            if (index === currentStep) {
+                $item.addClass('active');
+                $counter.addClass('bg-primary text-white').removeClass('bg-secondary text-dark');
+                $label.addClass('text-primary');
+            } else {
+                $item.removeClass('active');
+                $counter.removeClass('bg-primary text-white').addClass('bg-secondary text-dark');
+                $label.removeClass('text-primary');
+            }
+        });
 
-                    $formSteps.each(function (index) {
-                        $(this).toggleClass('d-block', index === currentStep).toggleClass('d-none', index !== currentStep);
-                    });
+        $formSteps.each(function (index) {
+            $(this).toggleClass('d-block', index === currentStep).toggleClass('d-none', index !== currentStep);
+        });
 
-                    $prevBtn.prop('disabled', currentStep === 0);
-                    $nextBtn.text(currentStep === $stepperItems.length - 1 ? 'Solicitar Beca' : 'Siguiente');
+        $prevBtn.prop('disabled', currentStep === 0);
+        $nextBtn.text(currentStep === $stepperItems.length - 1 ? 'Solicitar Beca' : 'Siguiente');
+    }
+
+    $prevBtn.on('click', function () {
+        if (currentStep > 0) {
+            currentStep--;
+            updateStepper();
+        }
+    });
+
+    $nextBtn.on('click', function () {
+        const $currentForm = $formSteps.eq(currentStep).find('form');
+
+        if ($currentForm.length && !$currentForm[0].checkValidity()) {
+            $currentForm[0].reportValidity();
+            return;
+        }
+
+        const $reglamentoGroup = $currentForm.find('input[name="reglamento"]');
+        if ($reglamentoGroup.length && !$reglamentoGroup.is(':checked')) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
+                icon: 'error',
+                confirmButtonText: 'Entendido'
+            });
+            return;
+        }
+
+        const $checkboxes = $currentForm.find('input[type="checkbox"]');
+        if ($checkboxes.length && !$checkboxes.is(':checked')) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Debe seleccionar al menos un motivo.',
+                icon: 'error',
+                confirmButtonText: 'Entendido'
+            });
+            return;
+        }
+
+        // Verificar la selección en la pregunta de progenitores
+        const selectedOption = $('input[name="viveConProgenitores"]:checked').val();
+        if (selectedOption) {
+            if (selectedOption === 'uno' || selectedOption === 'compartido') {
+                // Quitar los required de los campos de Progenitor 2
+                $('#progenitor2 input, #progenitor2 select').removeAttr('required');
+                // Omitir el paso Progenitor 2
+                if (currentStep < $stepperItems.length - 2) {
+                    currentStep++;
                 }
+            }
+        }
 
-                $prevBtn.on('click', function () {
-                    if (currentStep > 0) {
-                        currentStep--;
-                        updateStepper();
-                    }
-                });
-
-                $nextBtn.on('click', function () {
-                    const $currentForm = $formSteps.eq(currentStep).find('form');
-
-                    if ($currentForm.length && !$currentForm[0].checkValidity()) {
-                        $currentForm[0].reportValidity();
-                        return;
-                    }
-
-                    const $reglamentoGroup = $currentForm.find('input[name="reglamento"]');
-                    if ($reglamentoGroup.length && !$reglamentoGroup.is(':checked')) {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
-                            icon: 'error',
-                            confirmButtonText: 'Entendido'
-                        });
-                        return;
-                    }
-
-                    const $checkboxes = $currentForm.find('input[type="checkbox"]');
-                    if ($checkboxes.length && !$checkboxes.is(':checked')) {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Debe seleccionar al menos un motivo.',
-                            icon: 'error',
-                            confirmButtonText: 'Entendido'
-                        });
-                        return;
-                    }
-
-                    if (currentStep < $stepperItems.length - 1) {
-                        currentStep++;
-                        updateStepper();
-                    } else {
-                        Swal.fire({
-                            title: 'Éxito',
-                            text: 'Se realizó el registro de solicitud de beca correctamente.',
-                            icon: 'success',
-                            confirmButtonText: 'Aceptar'
-                        }).then(() => {
-                            currentStep = 0;
-                            updateStepper();
-                        });
-                    }
-                });
-
+        if (currentStep < $stepperItems.length - 1) {
+            currentStep++;
+            updateStepper();
+        } else {
+            Swal.fire({
+                title: 'Éxito',
+                text: 'Se realizó el registro de solicitud de beca correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                currentStep = 0;
                 updateStepper();
+            });
+        }
+    });
 
-                function toggleVisibility(triggerSelector, targetSelector, condition) {
-                    $(triggerSelector).on('change', function () {
-                        $(targetSelector).toggleClass('d-none', !condition($(this)));
-                    });
-                }
+    updateStepper();
 
-                toggleVisibility('#trabajoSi', '#trabajoRemuneradoCampos', () => true);
-                toggleVisibility('#trabajoNo', '#trabajoRemuneradoCampos', () => false);
-                toggleVisibility('#trabajoNo', '#desempleoCampos', () => true);
-                toggleVisibility('#trabajoSi', '#desempleoCampos', () => false);
+    function toggleVisibility(triggerSelector, targetSelector, condition) {
+        $(triggerSelector).on('change', function () {
+            $(targetSelector).toggleClass('d-none', !condition($(this)));
+        });
+    }
 
-                toggleVisibility('#bonosSi', '#bonosMonto', () => true);
-                toggleVisibility('#bonosNo', '#bonosMonto', () => false);
+    toggleVisibility('#trabajoSi', '#trabajoRemuneradoCampos', () => true);
+    toggleVisibility('#trabajoNo', '#trabajoRemuneradoCampos', () => false);
+    toggleVisibility('#trabajoNo', '#desempleoCampos', () => true);
+    toggleVisibility('#trabajoSi', '#desempleoCampos', () => false);
 
-                toggleVisibility('#utilidadesSi', '#utilidadesMonto', () => true);
-                toggleVisibility('#utilidadesNo', '#utilidadesMonto', () => false);
+    toggleVisibility('#bonosSi', '#bonosMonto', () => true);
+    toggleVisibility('#bonosNo', '#bonosMonto', () => false);
 
-                toggleVisibility('#titularSi', '#titularCampos', () => true);
-                toggleVisibility('#titularNo', '#titularCampos', () => false);
+    toggleVisibility('#utilidadesSi', '#utilidadesMonto', () => true);
+    toggleVisibility('#utilidadesNo', '#utilidadesMonto', () => false);
 
-                toggleVisibility('#inmuebleSi', '#inmueblesDetalles', () => true);
-                toggleVisibility('#inmuebleNo', '#inmueblesDetalles', () => false);
+    toggleVisibility('#titularSi', '#titularCampos', () => true);
+    toggleVisibility('#titularNo', '#titularCampos', () => false);
 
-                $('#tipoDocumento').on('change', function () {
-                    const $nroDocumento = $('#nroDocumento');
-                    const tipo = $(this).val();
+    toggleVisibility('#inmuebleSi', '#inmueblesDetalles', () => true);
+    toggleVisibility('#inmuebleNo', '#inmueblesDetalles', () => false);
 
-                    $nroDocumento.val('').removeAttr('maxlength minlength pattern placeholder');
+    $('#tipoDocumento').on('change', function () {
+        const $nroDocumento = $('#nroDocumento');
+        const tipo = $(this).val();
 
-                    switch (tipo) {
-                        case 'DNI':
-                            $nroDocumento.attr({
-                                maxlength: 8,
-                                minlength: 8,
-                                pattern: '\\d{8}',
-                                placeholder: 'Debe tener 8 dígitos'
-                            });
-                            break;
-                        case 'Pasaporte':
-                            $nroDocumento.attr({
-                                maxlength: 12,
-                                pattern: '[a-zA-Z0-9]{1,12}',
-                                placeholder: 'Máximo 12 caracteres alfanuméricos'
-                            });
-                            break;
-                        case 'Carnet de Extranjería':
-                            $nroDocumento.attr({
-                                maxlength: 9,
-                                minlength: 9,
-                                pattern: '\\d{9}',
-                                placeholder: 'Debe tener 9 dígitos'
-                            });
-                            break;
-                    }
+        $nroDocumento.val('').removeAttr('maxlength minlength pattern placeholder');
+
+        switch (tipo) {
+            case 'DNI':
+                $nroDocumento.attr({
+                    maxlength: 8,
+                    minlength: 8,
+                    pattern: '\\d{8}',
+                    placeholder: 'Debe tener 8 dígitos'
                 });
-
-                $('#nroDocumento').on('input', function () {
-                    const tipo = $('#tipoDocumento').val();
-                    const value = $(this).val();
-
-                    switch (tipo) {
-                        case 'DNI':
-                        case 'Carnet de Extranjería':
-                            $(this).val(value.replace(/[^0-9]/g, ''));
-                            break;
-                        case 'Pasaporte':
-                            $(this).val(value.replace(/[^a-zA-Z0-9]/g, ''));
-                            break;
-                    }
+                break;
+            case 'Pasaporte':
+                $nroDocumento.attr({
+                    maxlength: 12,
+                    pattern: '[a-zA-Z0-9]{1,12}',
+                    placeholder: 'Máximo 12 caracteres alfanuméricos'
                 });
+                break;
+            case 'Carnet de Extranjería':
+                $nroDocumento.attr({
+                    maxlength: 9,
+                    minlength: 9,
+                    pattern: '\\d{9}',
+                    placeholder: 'Debe tener 9 dígitos'
+                });
+                break;
+        }
+    });
+
+    $('#nroDocumento').on('input', function () {
+        const tipo = $('#tipoDocumento').val();
+        const value = $(this).val();
+
+        switch (tipo) {
+            case 'DNI':
+            case 'Carnet de Extranjería':
+                $(this).val(value.replace(/[^0-9]/g, ''));
+                break;
+            case 'Pasaporte':
+                $(this).val(value.replace(/[^a-zA-Z0-9]/g, ''));
+                break;
+        }
+    });
 
                 $('#buscarEstudiante').on('click', function() {
                     const tipoDocumento = $('#tipoDocumento').val();
