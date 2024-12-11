@@ -35,6 +35,7 @@ Route::middleware(['auth','user-role:admin'])->group(function()
     Route::post('/importar-excel', [EstudianteController::class, 'importarExcel']);
     Route::get("/estudiantes",[EstudianteController::class, 'index'])->name("estudiantes.index");
     Route::put('/estudiantes/update', [EstudianteController::class, 'update'])->name('estudiantes.update');
-    Route::get('/estudiantes/buscar', [EstudianteController::class, 'buscar'])->name('estudiantes.buscar');
+
 });
 
+Route::get('/estudiantes/buscar', [EstudianteController::class, 'buscar'])->name('estudiantes.buscar');
