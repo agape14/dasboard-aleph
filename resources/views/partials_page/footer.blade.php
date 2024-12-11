@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-lg-2">
-                <div class="text-start mt-4 mt-lg-0">
+                {{-- <div class="text-start mt-4 mt-lg-0">
                     <h5 class="text-white fw-bold">Menu 1</h5>
                     <ul class="footer-item list-unstyled footer-link mt-3">
                         <li><a href="#">Sub menu 1</a></li>
@@ -44,11 +44,11 @@
                         <li><a href="#">Sub menu 3</a></li>
                         <li><a href="#">Sub menu 4</a></li>
                     </ul>
-                </div>
+                </div>--}}
             </div>
 
             <div class="col-lg-2 ">
-                <div class="text-start">
+                {{--  <div class="text-start">
                     <h5 class="text-white fw-bold">Menu 2</h5>
                     <ul class="footer-item list-unstyled footer-link mt-3">
                         <li><a href="">Sub menu 2.1</a></li>
@@ -56,18 +56,18 @@
                         <li><a href="">Sub menu 2.3</a></li>
                         <li><a href="">Sub menu 2.4</a></li>
                     </ul>
-                </div>
+                </div>--}}
             </div>
 
             <div class="col-lg-4">
-                <h5 class="text-white">Suscribirse</h5>
+                {{-- <h5 class="text-white">Suscribirse</h5>
                 <div class="input-group my-4">
                     <input type="text" class="form-control p-3" placeholder="subscribe" aria-label="subscribe"
                         aria-describedby="basic-addon2">
                     <a href="" class="input-group-text bg-primary text-white px-4" id="basic-addon2">Registrar</a>
                 </div>
                 <p class="mb-0 text-white-50">Las publicaciones aparecerán en tu feed de Suscripciones. Tú también puedes empezar.
-                </p>
+                </p>--}}
             </div>
         </div>
     </div>

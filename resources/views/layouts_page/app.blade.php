@@ -8,6 +8,7 @@
     <meta name="keywords" content="" />
     <meta content="Themesdesign" name="Agapito De la cruz Carlos" />
     <link rel="shortcut icon" href="{{ asset('images/aleph-favicon.ico') }} ">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <!-- Bootstrap css -->

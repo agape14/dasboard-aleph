@@ -39,3 +39,4 @@ Route::middleware(['auth','user-role:admin'])->group(function()
 });
 
 Route::get('/estudiantes/buscar', [EstudianteController::class, 'buscar'])->name('estudiantes.buscar');
+Route::post('/setdatos', [EstudianteController::class, 'setdatos'])->name('set.datos');

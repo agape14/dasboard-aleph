@@ -77,6 +77,7 @@
                         </div>
 
                         <div class="form mt-4">
+                            <form class="p-4 border rounded" id="frmSolicitud">
                              <!-- Paso 1: Inicio -->
                             <div class="form-step d-block" data-step="1">
                                 @include('paso1')
@@ -105,6 +106,7 @@
                                 <button id="prev-btn" class="btn btn-secondary" type="button" disabled>← Anterior</button>
                                 <button id="next-btn" class="btn btn-primary" type="button">Siguiente →</button>
                             </div>
+                            </form>
                         </div>
                     </div>
 
@@ -194,13 +196,32 @@
 
         let currentStep = 1;
 
-        // Función para actualizar la visibilidad de los pasos
+
         function updateSteps() {
             $('.form-step').addClass('d-none').removeClass('d-block');
             $(`.form-step[data-step="${currentStep}"]`).removeClass('d-none').addClass('d-block');
 
-            // Deshabilitar el botón "Anterior" en el primer paso
+            // Actualizar estado de botones
             $('#prev-btn').prop('disabled', currentStep === 1);
+            $('#next-btn').text(currentStep === $('.stepper-item').length ? "Solicitar Beca" : "Siguiente");
+
+            // Actualizar el estado del stepper
+            $('.stepper-item').each(function (index) {
+                const $item = $(this);
+                const $counter = $item.find(".step-counter");
+                const $label = $item.find(".step-label");
+
+                if (index + 1 === currentStep) {
+                    $item.addClass("active");
+                    $counter.addClass("bg-primary text-white").removeClass("bg-secondary text-dark");
+                    $label.addClass("text-primary");
+                } else {
+                    $item.removeClass("active");
+                    $counter.removeClass("bg-primary text-white").addClass("bg-secondary text-dark");
+                    $label.removeClass("text-primary");
+                }
+            });
+            console.log('currentSteppp',currentStep);
         }
 
         // Escuchar cambio en los radios de la pregunta 2
@@ -208,32 +229,109 @@
             const selectedValue = $('input[name="viveConProgenitores"]:checked').val();
             const stepProgenitor2 = $('#step-progenitor-2');
 
-            if (selectedValue === 'uno') {
-                stepProgenitor2.addClass('d-none').attr('data-skip', 'true');
+            if (selectedValue === 'uno' || selectedValue === 'compartido') {
+                stepProgenitor2.attr('data-skip', 'true');
             } else {
-                stepProgenitor2.removeClass('d-none').attr('data-skip', 'false');
+                stepProgenitor2.attr('data-skip', 'false');
             }
         });
-
+        /**/
         // Botón "Siguiente"
         $('#next-btn').click(function () {
             let nextStep = currentStep + 1;
 
-			const $reglamentoGroup = $('input[name="reglamento"]');
-			if ($reglamentoGroup.length && !$reglamentoGroup.filter(':checked').length) {
-				Swal.fire({
-					title: 'Error',
-					text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
-					icon: 'error',
-					confirmButtonText: 'Entendido'
-				});
-				return;
-			}
+            // Validaciones específicas para cada paso
+            if (currentStep === 1) { // Validación para el paso 1
+                const $reglamentoGroup = $('input[name="reglamento"]');
+                if ($reglamentoGroup.length && !$reglamentoGroup.filter(':checked').length) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Por favor confirma si has leído el Reglamento de Becas 2025.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    });
+                    return;
+                }
+            }
+
+            if (currentStep === 2) { // Validación para el paso 2
+                const $idestudiante = $('#id_estudiante').val();
+                const selectedOption = $('input[name="viveConProgenitores"]:checked').val();
+                const selectedMotivos = $('input[type="checkbox"]:checked').length; // Contar checkboxes seleccionados
+
+                if (!$idestudiante) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Debe seleccionar un estudiante, ingrese el tipo y numero de documento para buscar y seleccionarlo.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    });
+                    return;
+                }
+
+                if (!selectedOption) { // Si no hay ninguna opción seleccionada
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Por favor seleccione una opción en "¿Vive con ambos progenitores?"',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    });
+                    return;
+                }
+
+                if (selectedMotivos === 0) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Por favor seleccione al menos un motivo por el que solicita la beca.',
+                        icon: 'error',
+                        confirmButtonText: 'Entendido'
+                    });
+                    return;
+                }
+            }
+
+            // Enviar todos los formularios en el paso 6
+            if (currentStep === 6) {
+                 // Recolectar y enviar todos los formularios
+                 let formData = new FormData();
+                 formData = new FormData($('#frmSolicitud')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                // Enviar datos con AJAX (o método preferido)
+                $.ajax({
+                    url: '/setdatos', // Cambiar por tu endpoint
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: 'El formulario se envió correctamente.',
+                            icon: 'success',
+                            confirmButtonText: 'Entendido'
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error al enviar el formulario. Por favor, inténtelo de nuevo.',
+                            icon: 'error',
+                            confirmButtonText: 'Entendido'
+                        });
+                    }
+                });
+                return; // Detener avance al siguiente paso
+            }
             // Saltar el paso 4 si está marcado como omitido
             if ($(`#step-progenitor-2`).attr('data-skip') === 'true' && nextStep === 4) {
                 nextStep++;
             }
 
+            // Actualizar el paso actual si existe el siguiente paso
             if ($(`.form-step[data-step="${nextStep}"]`).length) {
                 currentStep = nextStep;
                 updateSteps();

@@ -65,4 +65,10 @@ class EstudianteController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Estudiante no encontrado.'], 404);
     }
+
+    public function setdatos(Request $request)
+    {
+        dd($request->all());
+        return response()->json(['success' => false, 'message' => 'Estudiante no encontrado.'], 404);
+    }
 }

@@ -47,19 +47,19 @@
         <div class="form-check">
             <input class="form-check-input" type="radio" name="viveConProgenitores" id="ambosProgenitores" value="ambos" required>
             <label class="form-check-label" for="ambosProgenitores">
-                Sí (habilitar Progenitor 1 y Progenitor 2)
+                Sí
             </label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="viveConProgenitores" id="unProgenitor" value="uno">
             <label class="form-check-label" for="unProgenitor">
-                Sólo con 1 progenitor (habilitar solo Progenitor 1)
+                Sólo con 1 progenitor
             </label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="viveConProgenitores" id="tiempoCompartido" value="compartido">
             <label class="form-check-label" for="tiempoCompartido">
-                Tiempo compartido con ambos progenitores (habilitar solo Progenitor 1)
+                Tiempo compartido con ambos progenitores
             </label>
         </div>
     </div>
